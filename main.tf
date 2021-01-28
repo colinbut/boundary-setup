@@ -52,14 +52,14 @@ resource "boundary_user" "readonly_users" {
 resource "boundary_group" "readonly_group" {
   name        = "read-only"
   description = "Organization group for readonly users"
-  member_ids  = [for user in boundary_user.readonly_users : userid]
+  member_ids  = [for user in boundary_user.readonly_users : user.id]
   scope_id    = boundary_scope.corp.id
 }
 
 resource "boundary_role" "organization_readonly" {
   name          = "Read-Only"
   description   = "read only role"
-  principal_ids = [boundary_group.readonly.id]
+  principal_ids = [boundary_group.readonly_group.id]
   grant_strings = ["id=*;type=*;actions=read"]
   scope_id      = boundary_scope.corp.id
 }
@@ -72,7 +72,7 @@ resource "boundary_role" "organization_admin" {
   scope_id      = boundary_scope.corp.id
 }
 
-resource "boundary_scope" "corp_infra" {
+resource "boundary_scope" "core_infra" {
   name                   = "Core infrastructure"
   description            = "My first project!"
   scope_id               = boundary_scope.corp.id

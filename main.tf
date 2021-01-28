@@ -117,7 +117,7 @@ resource "boundary_target" "backend_servers_service" {
 }
 
 # create target for accessing backend servers on port 22
-resource "boundary_target" "backend_servers_service" {
+resource "boundary_target" "backend_servers_ssh" {
   type = "tcp"
   name = "Backend Servers"
   description = "Backend SSH Target"

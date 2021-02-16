@@ -67,7 +67,7 @@ resource "boundary_role" "organization_readonly" {
 resource "boundary_role" "organization_admin" {
   name          = "admin"
   description   = "Administrator Role"
-  principal_ids = [concat([for user in boundary_user.users : user.id])]
+  principal_ids = concat([for user in boundary_user.users : user.id])
   grant_strings = ["id=*;type=*;actions=create,read,update,delete"]
   scope_id      = boundary_scope.corp.id
 }
